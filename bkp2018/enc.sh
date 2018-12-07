@@ -12,17 +12,24 @@ set -o pipefail         # Use last non-zero exit code in a pipeline
 # Made for OS X
 ###############################################################################
 
-DIR_NAME="vault"
+sensitive="vault"
+rootdir="bkp2018"
+date="$(date +%Y-%m-%d_%HH%M_%S)";
+
 clear
 
-echo "Decrypt"
+echo "Encrypt"
 
-gpg ${DIR_NAME}.zip.gpg
-unzip ${DIR_NAME}.zip
-rm -rf ${DIR_NAME}.zip.gpg
-rm -rf ${DIR_NAME}.zip
-
+# sensitive
+zip -r ${sensitive}.zip ${sensitive}
+rm -rf ${sensitive}
+gpg -c ${sensitive}.zip
+rm ${sensitive}.zip
 # clean clipboard
 pbcopy < /dev/null
+
+# back to root
+cd ..
+zip -r ${date}.zip ${rootdir}
 
 echo

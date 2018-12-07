@@ -12,17 +12,16 @@ set -o pipefail         # Use last non-zero exit code in a pipeline
 # Made for OS X
 ###############################################################################
 
-DIR_NAME="vault"
+sensitive="vault"
+rootdir="bkp2018"
 clear
 
-echo "Encrypt"
+echo "Decrypt - Ensure you are withing DIR bkp2018"
 
-zip -r ${DIR_NAME}.zip ${DIR_NAME}
-rm -rf ${DIR_NAME}
-gpg -c ${DIR_NAME}.zip
-rm ${DIR_NAME}.zip
-cd ..
-zip -r "bkp-2018".zip "bkp-2018"
+gpg ${sensitive}.zip.gpg
+unzip ${sensitive}.zip
+rm -rf ${sensitive}.zip.gpg
+rm -rf ${sensitive}.zip
 
 # clean clipboard
 pbcopy < /dev/null
