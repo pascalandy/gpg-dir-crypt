@@ -1,21 +1,28 @@
 #!/usr/bin/env bash
-###############################################################################
-# Bash best practice
-###############################################################################
-set -o errexit
-trap 'echo "Aborting due to errexit on line $LINENO. Exit code: $?" >&2' ERR
-set -o errtrace
-set -o nounset
+
+# A better class of script
+set -o errexit          # Exit on most errors (see the manual)
+set -o errtrace         # Make sure any error trap is inherited
+set -o nounset          # Disallow expansion of unset variables
+set -o pipefail         # Use last non-zero exit code in a pipeline
+#set -o xtrace          # Trace the execution of the script (debug)
+
 ###############################################################################
 # Functions
+# Made for OS X
 ###############################################################################
+
+DIR_NAME="vault"
+clear
 
 echo "Decrypt"
 
-gpg vault.zip.gpg
-rm -rf vault.zip.gpg
-unzip vault.zip
-rm -rf vault.zip
-cd vault
+gpg ${DIR_NAME}.zip.gpg
+unzip ${DIR_NAME}.zip
+rm -rf ${DIR_NAME}.zip.gpg
+rm -rf ${DIR_NAME}.zip
+
+# clean clipboard
+pbcopy < /dev/null
 
 echo
